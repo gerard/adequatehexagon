@@ -181,11 +181,15 @@ static void update_fade_factor(void)
 
 static void update_fps(int seconds_counted)
 {
+    static int last_print;
+    int i;
+
     glutTimerFunc(1000, update_fps, seconds_counted + 1);
-    if (unlikely(seconds_counted)) {
-        fprintf(stderr, "\b\b\b\b\b\b\b\b\b");
+
+    for (i = 0; i < last_print; i++) {
+        fprintf(stderr, "\b");
     }
-    fprintf(stderr, "FPS: %4u", ah_posted_redisplays / (seconds_counted + 1));
+    last_print = fprintf(stderr, "FPS: %4u", ah_posted_redisplays / (seconds_counted + 1));
 }
 
 static void render(void)

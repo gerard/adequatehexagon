@@ -234,7 +234,7 @@ static void keyboard(unsigned char key, int x, int y)
         break;
     case 27:
         fprintf(stderr, "\n");
-        glutLeaveMainLoop();
+        exit(0);
         break;
     default:
         break;

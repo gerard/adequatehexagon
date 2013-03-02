@@ -106,6 +106,7 @@ static GLuint make_program(GLuint vertex_shader, GLuint fragment_shader)
 /*
  * Data used to seed our vertex array and element array buffers:
  */
+#define N_VERTEX 4
 static const GLfloat g_vertex_buffer_data[] = { 
     -1.0f, -1.0f,
      1.0f, -1.0f,
@@ -122,12 +123,12 @@ static int make_resources(void)
     g_resources.vertex_buffer = make_buffer(
         GL_ARRAY_BUFFER,
         g_vertex_buffer_data,
-        sizeof(g_vertex_buffer_data)
+        N_VERTEX * sizeof(GLfloat) * 2
     );
     g_resources.element_buffer = make_buffer(
         GL_ELEMENT_ARRAY_BUFFER,
         g_element_buffer_data,
-        sizeof(g_element_buffer_data)
+        N_VERTEX * sizeof(GLushort)
     );
 
     g_resources.vertex_shader = make_shader(
@@ -207,7 +208,7 @@ static void render(void)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_resources.element_buffer);
     glDrawElements(
         GL_TRIANGLE_STRIP,  /* mode */
-        4,                  /* count */
+        N_VERTEX,           /* count */
         GL_UNSIGNED_SHORT,  /* type */
         (void*)0            /* element array buffer offset */
     );

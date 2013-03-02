@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include "ah-util.h"
 
+#define unlikely(x)     x
+
+
 /*
  * Global data used by our render callback:
  */
@@ -159,13 +162,24 @@ static int update_paused;
 /*
  * GLUT callbacks:
  */
+static unsigned int ah_posted_redisplays;
 static void update_fade_factor(void)
 {
     if (!update_paused) {
         int milliseconds = glutGet(GLUT_ELAPSED_TIME);
         g_resources.fade_factor = sinf((float)milliseconds * 0.001f) * 0.5f + 0.5f;
+        ah_posted_redisplays++;
         glutPostRedisplay();
     }
+}
+
+static void update_fps(int seconds_counted)
+{
+    glutTimerFunc(1000, update_fps, seconds_counted + 1);
+    if (unlikely(seconds_counted)) {
+        fprintf(stderr, "\b\b\b\b\b\b\b\b\b");
+    }
+    fprintf(stderr, "FPS: %4u", ah_posted_redisplays / (seconds_counted + 1));
 }
 
 static void render(void)
@@ -209,6 +223,7 @@ static void keyboard(unsigned char key, int x, int y)
         update_paused = !update_paused;
         break;
     case 27:
+        fprintf(stderr, "\n");
         glutLeaveMainLoop();
         break;
     default:
@@ -226,6 +241,7 @@ int main(int argc, char** argv)
     glutInitWindowSize(400, 400);
     glutCreateWindow("Hello World");
     glutIdleFunc(&update_fade_factor);
+    glutTimerFunc(1000, update_fps, 0);
     glutDisplayFunc(&render);
     glutKeyboardFunc(&keyboard);
 

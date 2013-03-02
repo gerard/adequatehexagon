@@ -106,11 +106,10 @@ static GLuint make_program(GLuint vertex_shader, GLuint fragment_shader)
 /*
  * Data used to seed our vertex array and element array buffers:
  */
-#define N_VERTEX      8
+#define N_VERTEX      7
 #define HEX_RADIUS  1.0
 #define M_SQRT3     1.7320508075688772
 static const GLfloat g_vertex_buffer_data[] = { 
-                    0,                          0,
      HEX_RADIUS      ,                          0,
      HEX_RADIUS / 2.0, HEX_RADIUS * M_SQRT3 / 2.0,
     -HEX_RADIUS / 2.0, HEX_RADIUS * M_SQRT3 / 2.0,

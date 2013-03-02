@@ -1,0 +1,15 @@
+GLEW_INCLUDE = /opt/local/include
+GLEW_LIB = /opt/local/lib
+
+ah: ah-main.o ah-util.o
+	gcc -o ah $^ -framework GLUT -framework OpenGL -L$(GLEW_LIB) -lGLEW
+
+hello-gl-dummy: hello-gl-dummy.o
+	gcc -o hello-gl-dummy $^ -framework GLUT -framework OpenGL -L$(GLEW_LIB) -lGLEW
+
+.c.o:
+	gcc -c -o $@ $< -I$(GLEW_INCLUDE)
+
+clean:
+	rm -f ah *.o
+

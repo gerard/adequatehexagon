@@ -10,5 +10,5 @@ void main()
         vec2( cos(rot_factor), sin(rot_factor)),
         vec2(-sin(rot_factor), cos(rot_factor))
     );
-    gl_Position = vec4(rotation * position * vec2(0.5), 0.0, 1.0);
+    gl_Position = vec4(rotation * position, 0.0, 1.0);
 }
